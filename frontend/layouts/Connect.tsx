@@ -1,18 +1,13 @@
 "use client";
-import PlaidAuth from '@/layouts/AccountDetails';
-import { UserContext } from '@/provider/userProvider';
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePlaidLink } from 'react-plaid-link';
-import { PuffLoader } from 'react-spinners';
 import AccountCard from './AccountCard';
 
 
 export default function Connect() {
     const [linkToken, setLinkToken] = useState<string>("");
-    const [publicToken, setPublicToken] = useState<string>("");
-    const { userId, username, email } = useContext(UserContext);
-    
+    const [publicToken, setPublicToken] = useState<string>(""); 
     
     useEffect(() => {
         const test = async () => {

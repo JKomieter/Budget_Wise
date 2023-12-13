@@ -15,3 +15,11 @@ export interface AccountInfo {
     accountType: string,
     accountName: string,
 }
+
+export interface TransactionInfo {
+    amount: number,
+    date: string,
+    name: string,
+    transactionId: string,
+    category: string,
+}

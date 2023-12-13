@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { create_link_token, get_access_token, exchange_public_token, auth } = require('../controllers/plaid_controller');
+const { create_link_token, get_access_token, exchange_public_token, auth, get_transactions } = require('../controllers/plaid_controller');
 const { sign_up , sign_in, check_auth_state} = require('../controllers/user_controller');
 const router = Router();
 
@@ -20,5 +20,7 @@ router.post('/exchange_public_token', exchange_public_token);
 router.get('/check_auth_state', check_auth_state)
 
 router.post('/auth', auth)
+
+router.post('/get_transactions', get_transactions);
 
 module.exports = router;

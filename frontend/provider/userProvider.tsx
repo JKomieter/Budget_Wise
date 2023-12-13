@@ -2,6 +2,7 @@
 import { UserContextProps } from '@/types';
 import { createContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export const UserContext = createContext<UserContextProps>({} as UserContextProps);
 
@@ -12,9 +13,22 @@ function UserProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+        const res = await axios.get(`${URL}/check_auth_state`);
+        const data = await res.data;
+  
+        if (!data.isAuthenticated) return router.push("/");
+      } catch (error) {
+        console.log(error);
+        return router.push("/");
+      }
+      
+    };
 
-    if (username.length === 0) return router.push("/");
-  }, [username]);
+    checkAuth();
+  }, []);
 
   return (
     <div>

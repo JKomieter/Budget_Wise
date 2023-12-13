@@ -40,7 +40,6 @@ const sign_in = async (request, response) => {
 
         if (!user) return response.status(500).json({ message: "Failed to sign in" });
 
-        // get user info from database using email
         const usersCollectionRef = collection(db, "users");
         const queryUser = await getDocs(query(usersCollectionRef, where("email", "==", email)));
 
@@ -91,7 +90,7 @@ const check_auth_state = async (request, response) => {
             if (user) {
                 return response.status(200).json({ message: "User is signed in", isAuthenticated: true });
             } else {
-                return response.status(500).json({ message: "User is not signed in", isAuthenticated: false });
+                return response.status(200).json({ message: "User is not signed in", isAuthenticated: false });
             }
         });
     } catch (error) {
