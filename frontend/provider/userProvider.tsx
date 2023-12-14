@@ -18,7 +18,7 @@ function UserProvider({ children }: { children: React.ReactNode }) {
         const URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
         const res = await axios.get(`${URL}/check_auth_state`);
         const data = await res.data;
-  
+        console.log(data);
         if (!data.isAuthenticated) return router.push("/");
       } catch (error) {
         console.log(error);
