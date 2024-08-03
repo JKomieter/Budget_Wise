@@ -27,7 +27,8 @@ function SignUpForm({
     const onSubmit: SubmitHandler<FieldValues> = useCallback(async (data) => {
         setState('loading');
         try {
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signup`, data);
+            const URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+            const res = await axios.post(`${URL}/signup`, data);
             const { email, username, userId } = res.data;
             setEmail(email);
             setUsername(username);

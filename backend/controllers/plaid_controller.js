@@ -87,7 +87,6 @@ const auth = async function (request, response) {
 
 const get_transactions = async function (request, response) {
     const { access_token, userId } = request.body;
-    console.log("ACCESS TOKEN", access_token);
     const plaidRequest = {
         access_token: access_token,
         start_date: '2018-01-01',
@@ -112,13 +111,6 @@ const get_transactions = async function (request, response) {
                 paginatedResponse.data.transactions,
             );
         }
-
-        console.log('transactions', 
-            transactions[0].amount,
-            transactions[0].date,
-            transactions[0].name,
-            transactions[0].category[0],
-        );
     
         let count = 0;
         while (count < 3) {
