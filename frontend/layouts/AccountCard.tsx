@@ -47,7 +47,7 @@ function AccountCard({
         </button>
         <button 
           className='bg-green-800 w-full text-white rounded-lg px-5 py-3 border-2 border-white hover:bg-green-600 hover:border-green-600 hover:text-white'
-        onClick={() => getTransactions()}>
+          onClick={() => getTransactions()}>
           Get latest transaction
         </button>
       </div>

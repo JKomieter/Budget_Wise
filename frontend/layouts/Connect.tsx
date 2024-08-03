@@ -12,8 +12,9 @@ export default function Connect() {
     useEffect(() => {
         const test = async () => {
             const URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-            const res = await axios.post(`${URL}/create_link_token`);
-            setLinkToken(res.data.link_token)
+            const res = await axios.post(`${URL}/create_link_token`, {user_id: '123'});
+            const data = await res.data;
+            setLinkToken(data.link_token)
         };
 
         test();
@@ -23,7 +24,6 @@ export default function Connect() {
         token: linkToken,
         onSuccess: (public_token, metadata) => {
             setPublicToken(public_token);
-            console.log("sucess", public_token, metadata);
         },
     });
 

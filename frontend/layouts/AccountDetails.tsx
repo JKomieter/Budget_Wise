@@ -19,11 +19,14 @@ function AccountDetails({
         const URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
         const test = async () => {
             try {
-                if (publicToken.length === 0) return;
+                if (publicToken.length === 0) return; 
                 const accessToken = await axios.post(`${URL}/exchange_public_token`, { public_token: publicToken, user_id: userId });
-                const auth = await axios.post(`${URL}/auth`, { access_token: accessToken.data.access_token, userId });
-                const data = await auth.data;
-                setAccount(data);
+                const accessData = await accessToken.data;
+
+                const auth = await axios.post(`${URL}/auth`, { access_token: accessData.access_token, userId });
+                const authData = await auth.data;
+
+                setAccount(authData);
                 setAccessToken(accessToken.data.access_token);
             } catch (error) {
                 console.log(error);
@@ -40,18 +43,18 @@ function AccountDetails({
                 <h4 className='text-lg underline'>
                     Account Details
                 </h4>
-                <span className=''>
+                <p>
                     Account Name: {account.accountName}
-                </span>
-                <span className=''>
+                </p>
+                <p>
                     Account Number: {account.accountType}
-                </span>
-                <span className=''>
+                </p>
+                <p>
                     Availble: {account.availble}
-                </span>
-                <span className=''>
+                </p>
+                <p>
                     Currency: {account.currency}
-                </span>
+                </p>
         </div>
     )
 }

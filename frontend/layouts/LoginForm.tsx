@@ -1,7 +1,9 @@
-import React from 'react';
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import React, { useCallback } from 'react';
+import { useForm, SubmitHandler, FieldValues, set } from "react-hook-form";
 import { Red_Hat_Display } from 'next/font/google';
 import axios from 'axios';
+import { on } from 'events';
+import { toast } from 'react-toastify';
 
 const red_hat_display = Red_Hat_Display({
     subsets: ['latin'],
@@ -20,9 +22,18 @@ function LoginForm({
     } = useForm();
 
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
-    };
+    const onSubmit: SubmitHandler<FieldValues> = useCallback(async (data) => {
+        setState('loading');
+        try {
+            const URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+            const res = await axios.post(`${URL}/signin`, data);
+            const { username, email, userId } = await res.data;
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to sign up");
+            setState('login');
+        }
+    }, []);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5 md:px-14 px-6 w-full'>
@@ -45,7 +56,8 @@ function LoginForm({
                 {errors.password && <span>This field is required</span>}
             </div>
             <div className="flex items-center mt-4 md:flex-row flex-col gap-4">
-                <button type='submit' className={`${red_hat_display.className} px-7 py-3 rounded-3xl border-2 border-purple-900 text-purple-900 font-bold hover:bg-purple-900 hover:text-white duration-200 text-lg`}>
+                <button 
+                type='submit' className={`${red_hat_display.className} px-7 py-3 rounded-3xl border-2 border-purple-900 text-purple-900 font-bold hover:bg-purple-900 hover:text-white duration-200 text-lg`}>
                     Log in
                 </button>
                 <p>
